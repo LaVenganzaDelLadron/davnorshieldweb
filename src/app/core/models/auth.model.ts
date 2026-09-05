@@ -5,20 +5,23 @@ export interface LoginRequest {
     password: string;
 }
 export interface RegisterRequest { 
-    name: string; 
+    full_name: string;
     email: string; 
     password: string; 
-    barangayId?: string; 
-    municipalityId?: string; 
+    phone?: string;
+    role: 'citizen' | 'admin' | 'lgu' | 'school';
+    barangay_id?: string;
+    municipality_id?: string;
+    is_active?: boolean;
 }
 export interface TokenResponse { 
-    accessToken: string; 
-    tokenType: string; 
-    expiresIn?: number; 
-    refreshToken?: string; 
+    access_token: string;
+    token_type: string;
+    expires_in: number;
 }
-export interface AuthResponse extends TokenResponse { 
+export interface AuthResponse {
     user: User; 
+    token: TokenResponse;
 }
 export interface ChangePasswordRequest { 
     currentPassword: string; 
