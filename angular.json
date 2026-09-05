@@ -56,7 +56,14 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "security": {
+                "allowedHosts": [
+                  "localhost",
+                  "127.0.0.1",
+                  "192.168.190.133"
+                ]
+              }
             }
           },
           "defaultConfiguration": "production"
@@ -68,7 +75,14 @@
               "buildTarget": "davnorshieldweb:build:production"
             },
             "development": {
-              "buildTarget": "davnorshieldweb:build:development"
+              "buildTarget": "davnorshieldweb:build:development",
+              "host": "0.0.0.0",
+              "port": 4200,
+              "allowedHosts": [
+                "localhost",
+                "127.0.0.1",
+                "192.168.190.133"
+              ]
             }
           },
           "defaultConfiguration": "development"

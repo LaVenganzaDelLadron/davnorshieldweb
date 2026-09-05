@@ -12,9 +12,13 @@ export const errorInterceptor: HttpInterceptorFn = (request,next) => {
     const router=inject(Router); 
     return next(request).pipe(catchError((error:HttpErrorResponse)=>{
         let message='Something went wrong. Please try again.'; 
-        if(error.status===401){auth.logout();
-            void router.navigate(['/login']);
-            message='Your session has expired. Please sign in again.';
+        const isPublicAuthRequest=request.url.includes('/auth/login') || request.url.includes('/auth/register');
+        if(error.status===401){
+            if(isPublicAuthRequest) message=error.error?.detail ?? 'Invalid email or password.';
+            else {auth.logout();
+                void router.navigate(['/login']);
+                message='Your session has expired. Please sign in again.';
+            }
         }
         else if(error.status===403) message='Access Denied.'; 
         else if(error.status===404) message='The requested resource was not found.'; 
