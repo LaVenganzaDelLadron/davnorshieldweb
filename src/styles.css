@@ -289,3 +289,31 @@ html, body { background: #fff; color: #111827; font-family: Inter, ui-sans-serif
 .dashboard-stat .stat-icon {
   border-radius: 10px !important;
 }
+
+/* Keep the primary navigation on the left for desktop screens. */
+@media (min-width: 761px) {
+  .side-nav {
+    display: flex;
+    width: 248px;
+    border-right: 1px solid #e5e7eb;
+    background: #fff;
+  }
+  .main-content {
+    margin-left: 248px;
+    max-width: none;
+  }
+  .simple-header {
+    padding-left: 24px;
+  }
+  .simple-header .utility-nav {
+    display: none;
+  }
+  .side-nav .nav-label,
+  .side-nav nav,
+  .side-nav .account-box {
+    display: grid;
+  }
+  .side-nav .nav-label {
+    display: block;
+  }
+}
