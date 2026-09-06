@@ -16,7 +16,7 @@
     <form class="form-grid auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
       @if (isRegister) {
         <label>Full name
-          <input class="input" type="text" formControlName="full_name" autocomplete="name" placeholder="e.g. Maria Santos">
+          <input class="input" type="text" formControlName="full_name" autocomplete="name" placeholder="Your full name">
           @if (form.controls.full_name.invalid && form.controls.full_name.touched) { <small class="field-error">Please enter your full name.</small> }
         </label>
       }

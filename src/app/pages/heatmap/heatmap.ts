@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { HeatmapService } from '../../core/api/heatmap.service';
 import { HeatmapPoint } from '../../core/models/heatmap.model';
 
@@ -12,11 +12,15 @@ import { HeatmapPoint } from '../../core/models/heatmap.model';
 export class Heatmap {
   private readonly service = inject(HeatmapService);
   points: HeatmapPoint[] = [];
+  loading = true;
   error = '';
-  ngOnInit(): void {
-    this.service.getMunicipalityHeatmap().subscribe({
-      next: points => this.points = points,
-      error: () => this.error = 'Heatmap data could not be loaded.',
+
+  constructor() {
+    afterNextRender(() => {
+      this.service.getMunicipalityHeatmap().subscribe({
+        next: points => { this.points = points; this.loading = false; },
+        error: () => { this.error = 'Heatmap data could not be loaded.'; this.loading = false; },
+      });
     });
   }
 }

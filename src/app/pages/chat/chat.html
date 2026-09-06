@@ -1,1 +1,83 @@
-<main class="page-shell"><header class="page-heading"><div><p class="eyebrow">Community support</p><h1>CyberShield chat</h1><p>Ask the CyberShield assistant about online safety.</p></div></header><section class="cyber-card chat-layout"><div class="chat-window"><div class="chat-messages">@for(message of messages; track message.id){<div class="bubble" [class.in]="message.role==='assistant'" [class.out]="message.role==='user'">{{message.content}}</div>}@if(!messages.length){<div class="bubble in">Hello. Ask me how to spot a scam or protect your account.</div>}</div>@if(error){<p class="field-error" role="alert">{{error}}</p>}<div class="chat-input"><input class="input" [(ngModel)]="prompt" (keyup.enter)="send()" placeholder="Write a message..."><button class="btn btn-primary" type="button" [disabled]="loading" (click)="send()">{{loading ? 'Sending...' : 'Send →'}}</button></div></div></section></main>
+<main class="chat-page">
+  <aside class="chat-sidebar">
+    <div class="chat-sidebar-header">
+      <div>
+        <p class="eyebrow">CyberShield DN</p>
+        <h1>Assistant</h1>
+      </div>
+      <button class="chat-new-button" type="button" (click)="startNewConversation()" aria-label="Start a new conversation">+</button>
+    </div>
+    <button class="chat-conversation active" type="button">
+      <span class="chat-conversation-icon">✦</span>
+      <span>
+        <strong>{{ conversationId ? 'Current conversation' : 'New conversation' }}</strong>
+        <small>Cybersecurity assistant</small>
+      </span>
+    </button>
+  </aside>
+
+  <section class="chat-main">
+    <header class="chat-main-header">
+      <div>
+        <p class="eyebrow">Cybersecurity help</p>
+        <h2>How can I help you today?</h2>
+      </div>
+      <span class="chat-status"><i></i> Online</span>
+    </header>
+
+    <div class="chat-transcript" aria-live="polite">
+      @if (!messages.length && !loading) {
+        <div class="chat-empty">
+          <div class="chat-empty-icon">✦</div>
+          <h3>Ask CyberShield</h3>
+          <p>Get simple guidance about phishing, suspicious links, online scams, and digital safety.</p>
+        </div>
+      }
+
+      @for (message of messages; track message.id) {
+        <article class="chat-message" [class.chat-message-user]="message.role === 'user'">
+          <div class="chat-avatar" [class.chat-avatar-user]="message.role === 'user'">
+            {{ message.role === 'assistant' ? '✦' : 'You' }}
+          </div>
+          <div class="chat-message-content">
+            <strong>{{ message.role === 'assistant' ? 'CyberShield' : 'You' }}</strong>
+            <p>{{ message.content }}</p>
+            @if (sourceCount(message); as sourceCount) {
+              <small class="chat-sources">Sources used: {{ sourceCount }}</small>
+            }
+          </div>
+        </article>
+      }
+
+      @if (loading) {
+        <article class="chat-message">
+          <div class="chat-avatar">✦</div>
+          <div class="chat-message-content">
+            <strong>CyberShield</strong>
+            <div class="chat-typing" aria-label="CyberShield is typing"><i></i><i></i><i></i></div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="chat-composer-wrap">
+      @if (error) {
+        <p class="field-error" role="alert">{{ error }}</p>
+      }
+      <div class="chat-composer">
+        <textarea
+          [(ngModel)]="prompt"
+          (keydown.control.enter)="send()"
+          (keydown.meta.enter)="send()"
+          rows="1"
+          aria-label="Message CyberShield"
+          placeholder="Message CyberShield..."
+        ></textarea>
+        <button class="chat-send-button" type="button" [disabled]="loading || !prompt.trim()" (click)="send()" aria-label="Send message">
+          ↑
+        </button>
+      </div>
+      <small class="chat-disclaimer">CyberShield can make mistakes. Do not share passwords or sensitive personal information.</small>
+    </div>
+  </section>
+</main>

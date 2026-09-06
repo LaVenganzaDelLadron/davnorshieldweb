@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { ChatService } from '../../core/api/chat.service';
-import { ChatMessage } from '../../core/models/chat.model';
+import { ChatMessage, ChatResponse } from '../../core/models/chat.model';
 
 @Component({
   imports: [CommonModule, FormsModule],
@@ -18,22 +19,59 @@ export class Chat {
   loading = false;
   error = '';
 
+  startNewConversation(): void {
+    this.conversationId = undefined;
+    this.messages = [];
+    this.error = '';
+  }
+
   send(): void {
     const prompt = this.prompt.trim();
     if (!prompt || this.loading) return;
     this.loading = true;
     this.error = '';
-    this.chat.sendMessage({ conversation_id: this.conversationId, prompt }).subscribe({
+    const userMessage: ChatMessage = {
+      id: this.messageId(),
+      role: 'user',
+      content: prompt,
+      created_at: new Date().toISOString(),
+    };
+    this.messages = [...this.messages, userMessage];
+    this.prompt = '';
+
+    this.chat.sendMessage({ conversation_id: this.conversationId, prompt }).pipe(
+      finalize(() => { this.loading = false; }),
+    ).subscribe({
       next: response => {
+        const assistantMessage = this.toMessage(response);
         this.conversationId = response.conversation_id;
-        this.messages = [...this.messages,
-          { id: crypto.randomUUID(), role: 'user', content: prompt, created_at: new Date().toISOString() },
-          { id: crypto.randomUUID(), role: 'assistant', content: response.message, metadata: { sources: response.sources }, created_at: new Date().toISOString() },
-        ];
-        this.prompt = '';
-        this.loading = false;
+        this.messages = [...this.messages, assistantMessage];
       },
-      error: () => { this.error = 'Chat is temporarily unavailable.'; this.loading = false; },
+      error: () => {
+        this.messages = this.messages.filter(message => message.id !== userMessage.id);
+        this.error = 'Chat is temporarily unavailable.';
+      },
     });
+  }
+
+  private toMessage(response: ChatResponse): ChatMessage {
+    return {
+      id: this.messageId(),
+      role: 'assistant',
+      content: response.message || 'The assistant returned an empty response.',
+      metadata: response.sources?.length ? { sources: response.sources } : null,
+      created_at: new Date().toISOString(),
+    };
+  }
+
+  sourceCount(message: ChatMessage): number {
+    const sources = message.metadata?.['sources'];
+    return Array.isArray(sources) ? sources.length : 0;
+  }
+
+  private messageId(): string {
+    return typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random()}`;
   }
 }

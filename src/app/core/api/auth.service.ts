@@ -19,8 +19,13 @@ import { User } from '../models/user.model';
     );
   }
   /** Clears the browser session token without making an API request. */
-  clearSession(): void { localStorage.removeItem(this.key); }
-  /** Returns the saved JWT, if present. */ getToken():string|null{return localStorage.getItem(this.key);}
+  clearSession(): void {
+    if (typeof localStorage !== 'undefined') localStorage.removeItem(this.key);
+  }
+  /** Returns the saved JWT, if present. */
+  getToken(): string | null {
+    return typeof localStorage !== 'undefined' ? localStorage.getItem(this.key) : null;
+  }
   /** Indicates whether a JWT is available. */ isAuthenticated():boolean{return !!this.getToken();}
   /** Returns the role claim from the saved JWT when available. */
   getRole(): UserRole | null {
@@ -35,5 +40,7 @@ import { User } from '../models/user.model';
   }
   /** Super admins are allowed to use every protected API endpoint. */
   isSuperAdmin(): boolean { return this.getRole() === ROLES.SUPER_ADMIN; }
-  private setToken(token:string):void{localStorage.setItem(this.key,token);}
+  private setToken(token:string):void {
+    if (typeof localStorage !== 'undefined') localStorage.setItem(this.key, token);
+  }
 }

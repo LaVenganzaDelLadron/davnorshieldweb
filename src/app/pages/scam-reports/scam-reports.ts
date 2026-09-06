@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ReportsService } from '../../core/api/reports.service';
@@ -18,17 +18,20 @@ export class ScamReports {
   description = '';
   category = 'phishing';
   loading = false;
+  listLoading = true;
   error = '';
   success = '';
 
-  ngOnInit(): void {
-    this.loadReports();
+  constructor() {
+    afterNextRender(() => this.loadReports());
   }
 
   loadReports(): void {
+    this.listLoading = true;
+    this.error = '';
     this.reportsService.getReports({ page: 1, pageSize: 20 }).subscribe({
-      next: response => this.reports = response.items ?? [],
-      error: () => this.error = 'Reports could not be loaded.',
+      next: response => { this.reports = response.items ?? []; this.listLoading = false; },
+      error: () => { this.error = 'Reports could not be loaded.'; this.listLoading = false; },
     });
   }
 
@@ -39,6 +42,7 @@ export class ScamReports {
     }
     this.loading = true;
     this.error = '';
+    this.success = '';
     this.reportsService.createReport({ title: this.title, description: this.description, category: this.category }).subscribe({
       next: report => {
         this.reports = [report, ...this.reports];

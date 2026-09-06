@@ -15,12 +15,13 @@ import { Profile } from './pages/profile/profile';
 import { Settings } from './pages/settings/settings';
 import { Admin } from './pages/admin/admin';
 import { Chat } from './pages/chat/chat';
+import { authGuard } from './core/guard/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: Landing, pathMatch: 'full' },
   { path: 'login', component: Auth, data: { mode: 'login' } },
   { path: 'register', component: Auth, data: { mode: 'register' } },
-  { path: '', component: DashboardLayoutComponent, children: [
+  { path: '', component: DashboardLayoutComponent, canActivate: [authGuard], children: [
     { path: 'dashboard', component: Dashboard },
     { path: 'cyber-weather', component: CyberWeather },
     { path: 'heatmap', component: Heatmap },
