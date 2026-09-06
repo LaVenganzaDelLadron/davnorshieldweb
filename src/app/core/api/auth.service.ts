@@ -12,7 +12,14 @@ import { User } from '../models/user.model';
   /** Returns the authenticated user. */ me():Observable<User>{return this.http.get<User>(this.url+'/me');}
   /** Changes the current user's password. */ changePassword(body:ChangePasswordRequest):Observable<void>{return this.http.put<void>(this.url+'/change-password',body);}
   /** Deactivates the current account. */ deactivateAccount():Observable<void>{return this.http.delete<void>(this.url+'/deactivate-account');}
-  /** Clears the browser session token. */ logout():void{localStorage.removeItem(this.key);}
+  /** Revokes the current access token and clears the browser session. */
+  logout(): Observable<{ detail: string }> {
+    return this.http.post<{ detail: string }>(`${this.url}/logout`, {}).pipe(
+      tap(() => this.clearSession()),
+    );
+  }
+  /** Clears the browser session token without making an API request. */
+  clearSession(): void { localStorage.removeItem(this.key); }
   /** Returns the saved JWT, if present. */ getToken():string|null{return localStorage.getItem(this.key);}
   /** Indicates whether a JWT is available. */ isAuthenticated():boolean{return !!this.getToken();}
   /** Returns the role claim from the saved JWT when available. */

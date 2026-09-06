@@ -15,7 +15,7 @@ export const errorInterceptor: HttpInterceptorFn = (request,next) => {
         const isPublicAuthRequest=request.url.includes('/register/login') || request.url.includes('/register/register');
         if(error.status===401){
             if(isPublicAuthRequest) message=error.error?.detail ?? 'Invalid email or password.';
-            else {auth.logout();
+            else {auth.clearSession();
                 void router.navigate(['/login']);
                 message='Your session has expired. Please sign in again.';
             }

@@ -18,6 +18,7 @@ export class AccessControlService {
     if (this.auth.getRole() === ROLES.CITIZEN) {
       if (path.includes('/users') || path.includes('/documents/upload')) return false;
       if (path.includes('/dashboard/admin') || path.includes('/dashboard/lgu')) return false;
+      if (path.endsWith('/auth/logout')) return true;
       if (path.includes('/reports') && ['POST', 'GET'].includes(method)) return true;
       if (path.includes('/chat/') && ['POST', 'GET'].includes(method)) return true;
       return ['GET'].includes(method) || path.includes('/auth/me')
