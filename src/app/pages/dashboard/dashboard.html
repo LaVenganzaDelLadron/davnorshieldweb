@@ -1,1 +1,36 @@
-<main class="page-shell"><header class="page-heading"><div><p class="eyebrow">Command center</p><h1>Good morning, Elton.</h1><p>Here is the latest cyber safety pulse for Davao del Norte.</p></div><button class="btn btn-primary">＋ Report threat</button></header><section class="data-grid four"><article class="cyber-card metric"><span>Active reports</span><b>43</b><em>+12% this week</em></article><article class="cyber-card metric"><span>Threat level</span><b class="text-amber-300">72</b><em>Elevated risk</em></article><article class="cyber-card metric"><span>Protected areas</span><b>223</b><em>All municipalities</em></article><article class="cyber-card metric"><span>Alerts sent</span><b>892</b><em>Today</em></article></section><section class="data-grid two mt-4"><article class="cyber-card panel"><div class="panel-title"><h2>Threat activity</h2><span class="pill risk-info">LAST 7 DAYS</span></div><div class="chart">@for(i of [42,55,38,72,60,84,68,91,75,88,65,78];track $index){<i [style.height.%]="i"></i>}</div></article><article class="cyber-card panel"><div class="panel-title"><h2>Recent community reports</h2><a class="text-xs text-cyan-300" href="/reports">View all →</a></div><div class="list">@for(item of ['Fake GCash verification link','Prize claim SMS phishing','Suspicious QR code'];track item;let i=$index){<div class="list-row"><div><strong>{{item}}</strong><small>{{['Tagum City','Panabo City','Samal'][i]}} · {{i+6}} min ago</small></div><span class="pill" [class]="i===0?'risk-high':i===1?'risk-medium':'risk-info'">{{i===0?'HIGH':i===1?'MEDIUM':'REVIEW'}}</span></div>}</div></article></section></main>
+<main class="dashboard-page">
+  <div class="dashboard-breadcrumb"><span>⌂</span><span>/</span><span>Dashboard</span></div>
+  <header class="dashboard-heading">
+    <div><h1>Dashboard Overview</h1><p>Welcome back. Here's what's happening with your cyber safety network today.</p></div>
+    <button class="dashboard-period">Last 30 days <span>⌄</span></button>
+  </header>
+
+  <section class="dashboard-stat-grid">
+    <article class="dashboard-stat"><div><span>Total Reports</span><strong>15,284</strong><small class="positive">↗ 20.1% <em>vs last month</em></small></div><b class="stat-icon blue">▤</b></article>
+    <article class="dashboard-stat"><div><span>Active Citizens</span><strong>8,492</strong><small class="positive">↗ 15.3% <em>vs last month</em></small></div><b class="stat-icon green">♙</b></article>
+    <article class="dashboard-stat"><div><span>Threats Blocked</span><strong>1,234</strong><small class="negative">↘ 4.2% <em>vs last month</em></small></div><b class="stat-icon red">⌁</b></article>
+    <article class="dashboard-stat"><div><span>Detection Accuracy</span><strong>98.2%</strong><small class="positive">↗ 8.7% <em>vs last month</em></small></div><b class="stat-icon blue">↗</b></article>
+  </section>
+
+  <section class="dashboard-chart-grid">
+    <article class="dashboard-panel">
+      <div class="dashboard-panel-heading"><h2>Threat Reports Overview</h2><button aria-label="More report options">•••</button></div>
+      <div class="line-chart">
+        <div class="chart-y"><span>6k</span><span>4.5k</span><span>3k</span><span>1.5k</span><span>0</span></div>
+        <div class="chart-area"><div class="chart-grid-lines"></div><svg viewBox="0 0 700 220" preserveAspectRatio="none" aria-label="Threat reports trend"><path class="area-fill" d="M0,70 C60,100 100,155 145,140 S210,110 250,148 S315,130 350,105 S410,55 455,76 S510,88 550,52 S625,35 700,5 L700,220 L0,220 Z"></path><path class="line-stroke" d="M0,70 C60,100 100,155 145,140 S210,110 250,148 S315,130 350,105 S410,55 455,76 S510,88 550,52 S625,35 700,5"></path></svg><div class="chart-x"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div></div>
+      </div>
+    </article>
+    <article class="dashboard-panel">
+      <div class="dashboard-panel-heading"><h2>Reports by Municipality</h2><button aria-label="More municipality options">•••</button></div>
+      <div class="bar-chart">
+        @for (item of [{month:'Jan',reports:32,alerts:18},{month:'Feb',reports:24,alerts:22},{month:'Mar',reports:88,alerts:14},{month:'Apr',reports:48,alerts:20},{month:'May',reports:62,alerts:24},{month:'Jun',reports:52,alerts:25},{month:'Jul',reports:68,alerts:29},{month:'Aug',reports:76,alerts:33},{month:'Sep',reports:57,alerts:27},{month:'Oct',reports:80,alerts:35},{month:'Nov',reports:92,alerts:42},{month:'Dec',reports:100,alerts:48}]; track item.month) {<div class="bar-group"><div class="bars"><i [style.height.%]="item.reports"></i><b [style.height.%]="item.alerts"></b></div><span>{{item.month}}</span></div>}
+      </div>
+      <div class="chart-legend"><span><i class="legend-report"></i> reports</span><span><i class="legend-alert"></i> alerts</span></div>
+    </article>
+  </section>
+
+  <section class="dashboard-lower-grid">
+    <article class="dashboard-panel dashboard-list-panel"><div class="dashboard-panel-heading"><h2>Recent Community Reports</h2><a routerLink="/reports">View all →</a></div>@for (item of [{name:'Maria Santos',detail:'Fake GCash verification link',time:'6 min ago',status:'High risk'},{name:'Juan Dela Cruz',detail:'Prize claim SMS phishing',time:'18 min ago',status:'Review'},{name:'Liza Ramos',detail:'Suspicious QR code reported',time:'32 min ago',status:'Verified'}]; track item.name) {<div class="dashboard-list-row"><div class="list-avatar">{{item.name.charAt(0)}}</div><div class="list-copy"><strong>{{item.name}}</strong><span>{{item.detail}}</span></div><div class="list-meta"><b>{{item.time}}</b><small [class]="item.status === 'High risk' ? 'risk-text' : ''">{{item.status}}</small></div></div>}</article>
+    <article class="dashboard-panel dashboard-list-panel"><div class="dashboard-panel-heading"><h2>Top Threat Categories</h2><a routerLink="/analytics">View analytics →</a></div>@for (item of [{name:'Phishing links',count:'6,410',change:'+12.5%'},{name:'Fake e-wallets',count:'4,203',change:'+8.3%'},{name:'Prize scams',count:'2,184',change:'+5.7%'},{name:'Account takeover',count:'1,026',change:'+3.2%'}]; track item.name) {<div class="dashboard-list-row category-row"><div class="category-mark">{{item.name.charAt(0)}}</div><div class="list-copy"><strong>{{item.name}}</strong><span>Community reports</span></div><div class="list-meta"><b>{{item.count}}</b><small class="positive">{{item.change}}</small></div></div>}</article>
+  </section>
+</main>
