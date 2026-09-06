@@ -6,15 +6,12 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   selector: 'app-dashboard-layout', standalone: true, imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet],
   template: `
   <div class="app-shell">
-    <aside class="side-nav">
-      <a routerLink="/dashboard" class="app-brand"><span class="brand-mark">✦</span><span>CyberShield <b>DN</b></span></a>
-      <p class="nav-label">Monitoring</p>
-      <nav>@for (item of mainNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{item.label}}</a>}</nav>
-      <p class="nav-label">Administration</p>
-      <nav>@for (item of adminNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{item.label}}</a>}</nav>
-      <div class="account-box"><strong>Elton Dela Cruz</strong><small>Tagum City · Analyst</small><button class="btn btn-secondary">Sign out</button></div>
-    </aside>
-    <main class="main-content"><header class="top-nav"><button class="mobile-menu btn btn-secondary" (click)="drawer.set(!drawer())" aria-label="Toggle navigation">☰</button><div class="search-box"><label for="global-search">Search</label><input id="global-search" placeholder="Search reports, barangays, threats..." /></div><span class="system-status">● System operational</span><a routerLink="/alerts" aria-label="Alerts">Alerts <b>4</b></a><a routerLink="/profile" class="profile-link">E</a></header>
+    <header class="retro-header">
+      <div class="retro-brand"><a routerLink="/dashboard">CyberShield <b>DN</b></a><span class="beta-label">BETA</span></div>
+      <nav class="utility-nav"><a routerLink="/dashboard">Home</a><a routerLink="/profile">My Profile</a><a routerLink="/chat">Community</a><a routerLink="/scanner">Scan</a><a routerLink="/alerts">Notifications</a><a routerLink="/barangays">Members</a></nav>
+      <nav class="account-nav"><a routerLink="/profile">Edit Profile</a><a routerLink="/settings">Settings</a><a routerLink="/login">Logout</a></nav>
+    </header>
+    <main class="main-content"><header class="retro-toolbar"><button class="mobile-menu btn btn-secondary" (click)="drawer.set(!drawer())" aria-label="Toggle navigation">☰ Menu</button><div class="search-box"><label for="global-search">Search</label><input id="global-search" placeholder="Search reports, barangays, threats..." /></div><span class="system-status">● System operational</span></header>
       <router-outlet />
     </main>
     <nav class="bottom-nav">@for (item of mobileNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{item.label}}</a>}</nav>
