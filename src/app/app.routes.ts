@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardLayoutComponent } from './pages/layout/dashboard-layout/dashboard-layout.component';
-import { Auth } from './pages/auth/auth';
+import { Auth } from './pages/register/auth';
 import { Landing } from './pages/landing/landing';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { CyberWeather } from './pages/cyber-weather/cyber-weather';
