@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:8000/api/v1'
+  production: false,
+  apiUrl: 'https://davnorshieldapi.vercel.app/api/v1',
 };
