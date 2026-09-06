@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../../../environment/environment';
+import { environment } from '../../../environment/environment';
 import { API_ENDPOINTS } from '../constants/api.constants';
 import { AuthResponse, ChangePasswordRequest, LoginRequest, RegisterRequest } from '../models/auth.model';
 import { User } from '../models/user.model';
