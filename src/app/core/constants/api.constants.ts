@@ -9,5 +9,6 @@ export const API_ENDPOINTS = {
     MUNICIPALITIES:'/municipalities', 
     BARANGAYS:'/barangays', 
     DASHBOARD:'/dashboard', 
-    SCHOOLS:'/schools' 
+    SCHOOLS:'/schools',
+    CHAT:'/chat'
 } as const;
