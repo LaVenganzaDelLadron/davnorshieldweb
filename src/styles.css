@@ -263,3 +263,29 @@ html, body { background: #fff; color: #111827; font-family: Inter, ui-sans-serif
   .simple-toolbar .system-status { margin-left: auto; }
   .page-shell { padding-top: 24px; }
 }
+
+/* Consistent rounded component treatment */
+.cyber-card, .panel, .overview-card, .feature-card, .auth-card, .cta-card,
+.dashboard-stat, .dashboard-panel, .dashboard-period, .dashboard-chart-grid,
+.dashboard-lower-grid, .map-surface, .chart, .report, .upload-zone,
+.risk-orb, .chat-layout, .chat-window, .soft-row {
+  border-radius: 12px !important;
+}
+.btn, .primary-action, .secondary-action, .nav-action, .input, input, select, textarea,
+.toggle, .settings-nav, .scan-tab, .dashboard-period, .profile-link,
+.search-box input, .mobile-menu {
+  border-radius: 8px !important;
+}
+.brand-mark, .stat-icon, .feature-icon, .icon-box, .list-avatar, .category-mark,
+.signal-chip, .app-brand .brand-mark {
+  border-radius: 10px !important;
+}
+.pill, .beta-label {
+  border-radius: 999px !important;
+}
+.dashboard-stat, .dashboard-panel {
+  overflow: hidden;
+}
+.dashboard-stat .stat-icon {
+  border-radius: 10px !important;
+}
