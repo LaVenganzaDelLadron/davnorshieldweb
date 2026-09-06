@@ -11,18 +11,18 @@ import { LanguageService } from '../../../core/services/language.service';
   <div class="app-shell">
     <aside class="side-nav">
       <a routerLink="/dashboard" class="app-brand"><span class="brand-mark">✦</span><span>CyberShield <b>DN</b></span></a>
-      <p class="nav-label">Main menu</p>
+      <p class="nav-label">Start here</p>
       <nav>@for (item of mobileNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{lang.t(item.key)}}</a>}</nav>
-      <p class="nav-label">More tools</p>
+      <p class="nav-label">Explore</p>
       <nav>@for (item of visibleSecondaryNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{lang.t(item.key)}}</a>}</nav>
       <div class="account-box">@if (user) {<strong>{{ user.name }}</strong><small>{{ user.municipalityId || 'Municipality unavailable' }} · {{ user.role }}</small>} @else {<small>Account unavailable</small>}<button class="btn btn-secondary" type="button" (click)="logout()">Sign out</button></div>
     </aside>
     <header class="simple-header">
       <div class="simple-brand"><a routerLink="/dashboard"><span class="brand-mark">✦</span>CyberShield <b>DN</b></a></div>
-      <nav class="utility-nav"><a routerLink="/dashboard">Home</a><a routerLink="/scanner">Scan</a><a routerLink="/reports">Report</a><a routerLink="/heatmap">Map</a><a routerLink="/profile">Profile</a></nav>
+      <nav class="utility-nav"><a routerLink="/dashboard">Home</a><a routerLink="/chat">Ask for help</a><a routerLink="/profile">Profile</a></nav>
       <nav class="account-nav"><a routerLink="/alerts">{{lang.t('alerts')}}</a><a routerLink="/settings">{{lang.t('settings')}}</a><button class="language-toggle" type="button" (click)="lang.toggle()" [attr.aria-label]="lang.language() === 'en' ? 'Switch to Filipino' : 'Switch to English'">{{lang.language() === 'en' ? 'Filipino' : 'English'}}</button></nav>
     </header>
-    <main class="main-content"><header class="simple-toolbar"><button class="mobile-menu btn btn-secondary" (click)="drawer.set(!drawer())" aria-label="Toggle navigation">Menu</button><div class="search-box"><label for="global-search">Search</label><input id="global-search" placeholder="Search reports or places" /></div></header>
+    <main class="main-content"><header class="simple-toolbar"><button class="mobile-menu btn btn-secondary" (click)="drawer.set(!drawer())" aria-label="Toggle navigation">Menu</button><div class="search-box"><label for="global-search">Find help</label><input id="global-search" placeholder="Ask about a message or link" /></div></header>
       <router-outlet />
     </main>
     <nav class="bottom-nav">@for (item of mobileNav; track item.path) {<a [routerLink]="item.path" routerLinkActive="active"><span>{{item.icon}}</span>{{lang.t(item.key)}}</a>}</nav>

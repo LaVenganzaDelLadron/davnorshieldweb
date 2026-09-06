@@ -300,6 +300,38 @@ html, body { background: #fff; color: #111827; font-family: Inter, ui-sans-serif
     border-right: 1px solid #e5e7eb;
     background: #fff;
   }
+
+  /* Calm assistant-style product language */
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f7f5;
+    --section: #f1f1ef;
+    --border: #e5e5e1;
+    --border-strong: #c9c9c2;
+    --text: #2f2f2b;
+    --muted: #70706a;
+    --subtle: #9b9b94;
+    --blue: #2f6b4f;
+    --green: #2f6b4f;
+    --orange: #a66b21;
+    --red: #a34d45;
+  }
+
+  html, body { background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  .btn-primary, .primary-action, .nav-action { background: var(--green) !important; border-color: var(--green) !important; }
+  .btn-primary:hover, .primary-action:hover, .nav-action:hover { background: #24563f !important; }
+  .btn-secondary, .secondary-action { border-color: var(--border-strong) !important; color: var(--text) !important; }
+  .eyebrow, .dashboard-eyebrow { color: var(--green) !important; }
+  .risk-info, .risk-low { border-color: #bfd8c9 !important; background: #eef7f1 !important; color: var(--green) !important; }
+  .risk-medium { border-color: #ead6b8 !important; background: #fbf5e9 !important; color: var(--orange) !important; }
+  .risk-high { border-color: #e5c3bf !important; background: #fcf1ef !important; color: var(--red) !important; }
+  .simple-header { border-bottom-color: var(--border); background: rgba(255,255,255,.96); }
+  .simple-brand b, .simple-header a:hover, .simple-header .utility-nav a.router-link-active { color: var(--green); }
+  .brand-mark, .simple-brand .brand-mark { background: var(--green); }
+  .side-nav nav a:hover, .side-nav nav a.active { border-left-color: var(--green); color: var(--green); background: var(--surface); }
+  .language-toggle { color: var(--green); }
+  .language-toggle:hover { border-color: var(--green); background: var(--surface); }
+  .dashboard-quick-action-primary { background: var(--green) !important; border-color: var(--green) !important; }
   .main-content {
     margin-left: 248px;
     max-width: none;

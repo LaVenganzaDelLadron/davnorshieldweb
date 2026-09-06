@@ -1,38 +1,92 @@
 <main class="dashboard-page">
-  <div class="dashboard-breadcrumb"><span>⌂</span><span>/</span><span>Dashboard</span></div>
   <header class="dashboard-heading">
-    <div><h1>{{lang.t('welcome')}}</h1><p>{{lang.t('choose')}}</p></div>
-    <span class="dashboard-period">Live API data</span>
+    <div class="dashboard-heading-copy">
+      <p class="dashboard-eyebrow">Cyber safety at a glance</p>
+      <h1>{{lang.t('welcome')}}</h1>
+      <p>{{lang.t('choose')}}</p>
+    </div>
+    @if (data?.generatedAt) {
+      <span class="dashboard-freshness" title="When the dashboard data was generated">
+        <span class="freshness-dot" aria-hidden="true"></span>
+        Updated {{ data?.generatedAt | date:'MMM d, h:mm a' }}
+      </span>
+    }
   </header>
 
-  @if (loading) { <p class="muted" role="status">Loading dashboard...</p> }
-  @if (error) { <p class="field-error" role="alert">{{ error }}</p> }
-  <section class="dashboard-quick-actions" aria-label="Common actions">
-    <a routerLink="/scanner" class="dashboard-quick-action"><b>{{lang.t('checkSomething')}}</b><span>{{lang.t('checkHint')}}</span><em>→</em></a>
-    <a routerLink="/reports" class="dashboard-quick-action"><b>{{lang.t('reportScam')}}</b><span>{{lang.t('reportHint')}}</span><em>→</em></a>
-    <a routerLink="/alerts" class="dashboard-quick-action"><b>{{lang.t('localWarnings')}}</b><span>{{lang.t('localWarningsHint')}}</span><em>→</em></a>
-  </section>
-  <section class="dashboard-stat-grid">
-    @for (item of data?.metrics ?? []; track item.label) {
-      <article class="dashboard-stat"><div><span>{{ item.label }}</span><strong>{{ item.value }}</strong><small [class]="item.change !== undefined && item.change < 0 ? 'negative' : 'positive'">{{ change(item.label) }} <em>vs previous period</em></small></div><b class="stat-icon blue">▤</b></article>
-    } @empty {
-      @if (!loading) { <p class="muted">No dashboard metrics returned by the API.</p> }
-    }
+  @if (loading) {
+    <div class="dashboard-state" role="status"><span class="loading-dot" aria-hidden="true"></span>Loading your safety overview…</div>
+  }
+  @if (error) { <div class="dashboard-state dashboard-state-error" role="alert">{{ error }}</div> }
+
+  <section class="dashboard-assistant" aria-labelledby="assistant-heading">
+    <div class="assistant-avatar" aria-hidden="true">✦</div>
+    <div class="assistant-prompt">
+      <p class="dashboard-eyebrow">Start here</p>
+      <h2 id="assistant-heading">What would you like help with?</h2>
+      <p>Choose an option below. You can always come back here when something feels suspicious.</p>
+    </div>
+    <a routerLink="/chat" class="assistant-link">Ask a question <span aria-hidden="true">→</span></a>
   </section>
 
-  <section class="dashboard-chart-grid">
-    <article class="dashboard-panel">
-      <div class="dashboard-panel-heading"><h2>Threat Reports Overview</h2><button aria-label="More report options">•••</button></div>
-      <p class="muted">The API does not currently provide a report trend series.</p>
-    </article>
-    <article class="dashboard-panel">
-      <div class="dashboard-panel-heading"><h2>Reports by Municipality</h2><button aria-label="More municipality options">•••</button></div>
-      <p class="muted">Municipality trend data is not available from the API.</p>
-    </article>
+  <section class="dashboard-quick-actions" aria-label="Common actions">
+    <a routerLink="/scanner" class="dashboard-quick-action dashboard-quick-action-primary">
+      <span class="quick-action-icon" aria-hidden="true">✓</span>
+      <span class="quick-action-copy"><b>{{lang.t('checkSomething')}}</b><span>{{lang.t('checkHint')}}</span></span>
+      <span class="quick-action-arrow" aria-hidden="true">→</span>
+    </a>
+    <a routerLink="/reports" class="dashboard-quick-action">
+      <span class="quick-action-icon" aria-hidden="true">+</span>
+      <span class="quick-action-copy"><b>{{lang.t('reportScam')}}</b><span>{{lang.t('reportHint')}}</span></span>
+      <span class="quick-action-arrow" aria-hidden="true">→</span>
+    </a>
+    <a routerLink="/alerts" class="dashboard-quick-action">
+      <span class="quick-action-icon" aria-hidden="true">!</span>
+      <span class="quick-action-copy"><b>{{lang.t('localWarnings')}}</b><span>{{lang.t('localWarningsHint')}}</span></span>
+      <span class="quick-action-arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <section class="dashboard-section" aria-labelledby="overview-heading">
+    <div class="dashboard-section-heading">
+      <div><p class="dashboard-eyebrow">Your overview</p><h2 id="overview-heading">What is happening today</h2></div>
+      <a routerLink="/analytics">See details <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="dashboard-stat-grid">
+      @for (item of data?.metrics ?? []; track item.label) {
+        <article class="dashboard-stat">
+          <span class="stat-icon blue" aria-hidden="true">•</span>
+          <div class="dashboard-stat-copy">
+            <span>{{ item.label }}</span>
+            <strong>{{ item.value }}</strong>
+            @if (item.change !== undefined) { <small [class]="item.change < 0 ? 'negative' : 'positive'">{{ change(item.label) }} <em>from last period</em></small> }
+          </div>
+        </article>
+      } @empty {
+        @if (!loading) { <p class="dashboard-empty">Overview data is not available yet.</p> }
+      }
+    </div>
   </section>
 
   <section class="dashboard-lower-grid">
-    <article class="dashboard-panel dashboard-list-panel"><div class="dashboard-panel-heading"><h2>Recent Community Reports</h2><a routerLink="/reports">View all →</a></div>@for (item of reports; track item.id) {<div class="dashboard-list-row"><div class="list-avatar">{{item.title.charAt(0)}}</div><div class="list-copy"><strong>{{item.title}}</strong><span>{{item.category}}</span></div><div class="list-meta"><b>{{reportTime(item.createdAt)}}</b><small>{{item.status}}</small></div></div>} @empty { @if (!loading) { <p class="muted">No reports returned by the API.</p> } }</article>
-    <article class="dashboard-panel dashboard-list-panel"><div class="dashboard-panel-heading"><h2>Top Threat Categories</h2><a routerLink="/analytics">View analytics →</a></div>@for (item of threats; track item.category) {<div class="dashboard-list-row category-row"><div class="category-mark">{{item.category.charAt(0)}}</div><div class="list-copy"><strong>{{item.category}}</strong><span>Community reports</span></div><div class="list-meta"><b>{{item.count}}</b><small>{{item.severity}}</small></div></div>} @empty { @if (!loading) { <p class="muted">No threat categories returned by the API.</p> } }</article>
+    <article class="dashboard-panel dashboard-list-panel">
+      <div class="dashboard-panel-heading"><div><p class="dashboard-eyebrow">Community</p><h2>Recent reports</h2></div><a routerLink="/reports">View all <span aria-hidden="true">→</span></a></div>
+      @for (item of reports; track item.id) {
+        <div class="dashboard-list-row">
+          <div class="list-avatar" aria-hidden="true">{{item.title.charAt(0)}}</div>
+          <div class="list-copy"><strong>{{item.title}}</strong><span>{{item.category}}</span></div>
+          <div class="list-meta"><b>{{reportTime(item.createdAt)}}</b><small class="status-text">{{item.status}}</small></div>
+        </div>
+      } @empty { @if (!loading) { <p class="dashboard-empty">No community reports yet.</p> } }
+    </article>
+    <article class="dashboard-panel dashboard-list-panel">
+      <div class="dashboard-panel-heading"><div><p class="dashboard-eyebrow">Stay informed</p><h2>Common threats</h2></div><a routerLink="/analytics">View all <span aria-hidden="true">→</span></a></div>
+      @for (item of threats; track item.category) {
+        <div class="dashboard-list-row category-row">
+          <div class="category-mark" aria-hidden="true">{{item.category.charAt(0)}}</div>
+          <div class="list-copy"><strong>{{item.category}}</strong><span>Community reports</span></div>
+          <div class="list-meta"><b>{{item.count}}</b><small class="status-text">{{item.severity}}</small></div>
+        </div>
+      } @empty { @if (!loading) { <p class="dashboard-empty">Threat information is not available yet.</p> } }
+    </article>
   </section>
 </main>
