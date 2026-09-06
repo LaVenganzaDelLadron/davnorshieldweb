@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
+import { DashboardLayoutComponent } from './pages/layout/dashboard-layout/dashboard-layout.component';
 import { AuthPageComponent } from './features/auth/auth-page.component';
 import { LandingPageComponent } from './features/landing/landing-page.component';
 
