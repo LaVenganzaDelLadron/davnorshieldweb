@@ -43,7 +43,7 @@
   display: inline-grid;
   place-items: center;
   border: 0;
-  background: #2563eb;
+  background: #2f6b4f;
   color: #fff;
   cursor: pointer;
 }
@@ -57,20 +57,20 @@
 
 .chat-conversation {
   display: flex;
-  width: 100%;
+  width: min(100%, 220px);
   gap: 10px;
   margin-top: 28px;
   padding: 12px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid #c9dfd0;
   border-radius: 8px;
-  background: #eff6ff;
+  background: #eef7f1;
   color: #111827;
   text-align: left;
   cursor: pointer;
 }
 
 .chat-conversation-icon {
-  color: #2563eb;
+  color: #2f6b4f;
 }
 
 .chat-conversation strong,
@@ -105,7 +105,7 @@
   height: 7px;
   margin-right: 6px;
   border-radius: 50%;
-  background: #2563eb;
+  background: #2f6b4f;
 }
 
 .chat-transcript {
@@ -212,7 +212,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #2563eb;
+  background: #2f6b4f;
   animation: chat-pulse 1.2s infinite ease-in-out;
 }
 
@@ -256,6 +256,12 @@
 .chat-send-button:disabled {
   background: #d1d5db;
   cursor: not-allowed;
+}
+
+.chat-composer textarea {
+  width: auto;
+  min-height: 28px;
+  padding: 4px 2px;
 }
 
 .chat-disclaimer {
