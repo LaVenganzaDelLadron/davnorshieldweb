@@ -21,6 +21,11 @@ export class Auth {
   submitting = false;
   errorMessage = '';
   successMessage = '';
+  showPassword = false;
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   readonly form = this.formBuilder.group({
     full_name: [''],

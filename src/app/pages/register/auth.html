@@ -1,10 +1,11 @@
 <main class="auth-screen">
-  <span class="auth-glow one"></span><span class="auth-glow two"></span>
-  <section class="auth-card">
-    <a routerLink="/" class="auth-brand">✦ CyberShield <span>DN</span></a>
-    <p class="auth-kicker">{{ isRegister ? 'JOIN THE COMMUNITY' : 'WELCOME BACK' }}</p>
-    <h1>{{ isRegister ? 'Create your account.' : 'Sign in to stay protected.' }}</h1>
-    <p class="auth-copy">{{ isRegister ? 'Start helping your community spot and stop online scams.' : 'Monitor local threats, scan suspicious content, and keep Davao del Norte informed.' }}</p>
+  <section class="auth-card" aria-labelledby="auth-title">
+    <a routerLink="/" class="auth-brand" aria-label="Back to CyberShield DN home"><span class="auth-brand-mark">✦</span><span>CyberShield <b>DN</b></span></a>
+    <div class="auth-intro">
+      <span class="auth-kicker">{{ isRegister ? 'JOIN YOUR COMMUNITY' : 'WELCOME BACK' }}</span>
+      <h1 id="auth-title">{{ isRegister ? 'Create your account' : 'Sign in to CyberShield' }}</h1>
+      <p class="auth-copy">{{ isRegister ? 'Create a free account to help keep Davao del Norte safer online.' : 'Use your account to check scams, see local alerts, and report suspicious messages.' }}</p>
+    </div>
 
     @if (errorMessage) {
       <div class="auth-message auth-error" role="alert">{{ errorMessage }}</div>
@@ -13,24 +14,29 @@
       <div class="auth-message auth-success" role="status">{{ successMessage }}</div>
     }
 
-    <form class="form-grid auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
       @if (isRegister) {
-        <label>Full name
-          <input class="input" type="text" formControlName="full_name" autocomplete="name" placeholder="Your full name">
+        <label class="auth-field" for="full-name">Full name
+          <input id="full-name" class="input" type="text" formControlName="full_name" autocomplete="name" placeholder="e.g. Maria Santos" [attr.aria-invalid]="form.controls.full_name.invalid && form.controls.full_name.touched">
+          <small class="auth-hint">Use the name your community knows you by.</small>
           @if (form.controls.full_name.invalid && form.controls.full_name.touched) { <small class="field-error">Please enter your full name.</small> }
         </label>
       }
-      <label>Email address
-        <input class="input" type="email" formControlName="email" autocomplete="email" placeholder="you@example.com">
+      <label class="auth-field" for="email">Email address
+        <input id="email" class="input" type="email" formControlName="email" autocomplete="email" placeholder="you@example.com" [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched">
         @if (form.controls.email.invalid && form.controls.email.touched) { <small class="field-error">Enter a valid email address.</small> }
       </label>
-      <label>Password
-        <input class="input" type="password" formControlName="password" autocomplete="{{ isRegister ? 'new-password' : 'current-password' }}" placeholder="At least 8 characters">
+      <label class="auth-field" for="password">Password
+        <span class="auth-password-wrap">
+          <input id="password" class="input" [type]="showPassword ? 'text' : 'password'" formControlName="password" autocomplete="{{ isRegister ? 'new-password' : 'current-password' }}" placeholder="At least 8 characters" [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched">
+          <button class="password-toggle" type="button" (click)="togglePassword()" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">{{ showPassword ? 'Hide' : 'Show' }}</button>
+        </span>
+        <small class="auth-hint">Use at least 8 characters. Never share your password.</small>
         @if (form.controls.password.invalid && form.controls.password.touched) { <small class="field-error">Password must be at least 8 characters.</small> }
       </label>
-      <button class="btn btn-primary auth-submit" type="submit" [disabled]="submitting">
-        {{ submitting ? 'Please wait...' : (isRegister ? 'Create account' : 'Sign in securely') }}
-        @if (!submitting) { <span>→</span> }
+      <button class="btn btn-primary auth-submit" type="submit" [disabled]="submitting" [attr.aria-busy]="submitting">
+        {{ submitting ? 'Please wait...' : (isRegister ? 'Create my account' : 'Sign in') }}
+        @if (!submitting) { <span aria-hidden="true">→</span> }
       </button>
     </form>
 
@@ -38,6 +44,6 @@
       {{ isRegister ? 'Already have an account?' : 'New to CyberShield DN?' }}
       <a [routerLink]="isRegister ? '/login' : '/register'">{{ isRegister ? 'Sign in' : 'Create an account' }}</a>
     </p>
-    <p class="auth-copy auth-note">Your account helps build a safer digital community for Davao del Norte.</p>
+    <p class="auth-note">Your information is used to protect your account and your community.</p>
   </section>
 </main>
