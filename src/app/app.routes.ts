@@ -14,6 +14,7 @@ import { Barangays } from './pages/barangays/barangays';
 import { Profile } from './pages/profile/profile';
 import { Settings } from './pages/settings/settings';
 import { Admin } from './pages/admin/admin';
+import { Chat } from './pages/chat/chat';
 
 export const routes: Routes = [
   { path: '', component: Landing, pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'barangays', component: Barangays },
     { path: 'profile', component: Profile },
     { path: 'settings', component: Settings },
+    { path: 'chat', component: Chat },
     { path: 'admin', component: Admin },
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   ]},
