@@ -15,13 +15,14 @@ export class AccessControlService {
     const path = new URL(request.url, window.location.origin).pathname;
     const method = request.method.toUpperCase();
 
-    // Citizens can use their own account, scanning, community reads, reports, and chat.
     if (this.auth.getRole() === ROLES.CITIZEN) {
       if (path.includes('/users') || path.includes('/documents/upload')) return false;
       if (path.includes('/dashboard/admin') || path.includes('/dashboard/lgu')) return false;
       if (path.includes('/reports') && ['POST', 'GET'].includes(method)) return true;
       if (path.includes('/chat/') && ['POST', 'GET'].includes(method)) return true;
-      return ['GET'].includes(method) || path.includes('/auth/me') || path.includes('/auth/change-password') || path.includes('/auth/deactivate-account');
+      return ['GET'].includes(method) || path.includes('/auth/me')
+        || path.includes('/auth/change-password')
+        || path.includes('/auth/deactivate-account');
     }
 
     return true;
@@ -29,7 +30,7 @@ export class AccessControlService {
 
   private isPublic(request: HttpRequest<unknown>): boolean {
     const path = new URL(request.url, window.location.origin).pathname;
-    return request.method === 'GET' && (path.endsWith('/health') || path === '/')
+    return (request.method === 'GET' && (path.endsWith('/health') || path === '/'))
       || /\/auth\/(login|register)$/.test(path)
       || path.includes('/scanner/');
   }

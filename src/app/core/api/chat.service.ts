@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environment/environment';
+import { environment } from '../../../environment/environment';
 import { API_ENDPOINTS } from '../constants/api.constants';
 import { ChatDocumentRequest, ChatDocumentResponse, ChatMessage, ChatRequest, ChatResponse } from '../models/chat.model';
 
