@@ -6,6 +6,7 @@ import { DashboardService } from '../../core/api/dashboard.service';
 import { ReportsService } from '../../core/api/reports.service';
 import { DashboardData, ThreatSummary } from '../../core/models/dashboard.model';
 import { Report } from '../../core/models/report.model';
+import { LanguageService } from '../../core/services/language.service';
 
 @Component({
   imports: [CommonModule, RouterLink],
@@ -16,6 +17,7 @@ import { Report } from '../../core/models/report.model';
 export class Dashboard {
   private readonly dashboardService = inject(DashboardService);
   private readonly reportsService = inject(ReportsService);
+  readonly lang = inject(LanguageService);
 
   data: DashboardData | null = null;
   threats: ThreatSummary[] = [];

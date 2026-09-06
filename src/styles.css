@@ -106,6 +106,8 @@ table td { color: var(--text); border-color: var(--border); }
 .account-box strong { font-size: 13px; }
 .account-box small { color: var(--muted); font-size: 12px; }
 .account-box .btn { margin-top: 8px; width: 100%; }
+.language-toggle { min-height: 36px; border: 1px solid var(--border-strong); border-radius: 8px; background: #fff; color: var(--blue); padding: 0 10px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.language-toggle:hover { border-color: var(--blue); background: var(--surface); }
 .main-content { min-height: 100vh; margin-left: 248px; }
 .top-nav { position: sticky; top: 0; z-index: 20; display: flex; height: 72px; align-items: center; gap: 16px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.96); padding: 0 32px; }
 .search-box { display: flex; max-width: 440px; flex: 1; align-items: center; gap: 10px; }

@@ -1,12 +1,17 @@
 <main class="dashboard-page">
   <div class="dashboard-breadcrumb"><span>⌂</span><span>/</span><span>Dashboard</span></div>
   <header class="dashboard-heading">
-    <div><h1>Dashboard Overview</h1><p>Welcome back. Here's what's happening with your cyber safety network today.</p></div>
+    <div><h1>{{lang.t('welcome')}}</h1><p>{{lang.t('choose')}}</p></div>
     <span class="dashboard-period">Live API data</span>
   </header>
 
   @if (loading) { <p class="muted" role="status">Loading dashboard...</p> }
   @if (error) { <p class="field-error" role="alert">{{ error }}</p> }
+  <section class="dashboard-quick-actions" aria-label="Common actions">
+    <a routerLink="/scanner" class="dashboard-quick-action"><b>{{lang.t('checkSomething')}}</b><span>{{lang.t('checkHint')}}</span><em>→</em></a>
+    <a routerLink="/reports" class="dashboard-quick-action"><b>{{lang.t('reportScam')}}</b><span>{{lang.t('reportHint')}}</span><em>→</em></a>
+    <a routerLink="/alerts" class="dashboard-quick-action"><b>{{lang.t('localWarnings')}}</b><span>{{lang.t('localWarningsHint')}}</span><em>→</em></a>
+  </section>
   <section class="dashboard-stat-grid">
     @for (item of data?.metrics ?? []; track item.label) {
       <article class="dashboard-stat"><div><span>{{ item.label }}</span><strong>{{ item.value }}</strong><small [class]="item.change !== undefined && item.change < 0 ? 'negative' : 'positive'">{{ change(item.label) }} <em>vs previous period</em></small></div><b class="stat-icon blue">▤</b></article>
