@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  imports: [],
   selector: 'app-chat',
-  standalone: true,
-  templateUrl: './chat.html',
   styleUrl: './chat.css',
+  templateUrl: './chat.html',
 })
 export class Chat {}
